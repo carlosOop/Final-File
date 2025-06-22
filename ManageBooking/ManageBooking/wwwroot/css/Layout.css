@@ -1,0 +1,236 @@
+﻿html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
+}
+
+.custom-navbar {
+    background: White;
+    border-bottom: 1px solid #ddd;
+    padding: 0.75rem 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.logo-img {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 12px;
+}
+
+.system-name {
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: #333;
+}
+
+.nav-link {
+    font-weight: 500;
+    color: #333;
+    margin-left: 1rem;
+    transition: color 0.3s ease;
+}
+
+    .nav-link:hover,
+    .nav-link:focus {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+.dropdown-menu {
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+/*FOOTER*/
+.custom-footer {
+    background-color: #0d1a1f;
+    color: #e4dac2;
+    padding: 60px 40px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.footer-left {
+    max-width: 400px;
+}
+
+    .footer-left h2 {
+        font-size: 36px;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 20px;
+    }
+
+    .footer-left p {
+        color: #bfbfbf;
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
+
+.footer-right {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.hover-card {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+    .hover-card:hover {
+        transform: scale(1.05);
+    }
+
+.hover-info {
+    position: absolute;
+    bottom: 0;
+    background: rgba(13, 26, 31, 0.85);
+    color: #fff;
+    width: 100%;
+    padding: 20px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.hover-card:hover .hover-info {
+    transform: translateY(0);
+}
+
+.hover-info h3 {
+    margin: 0 0 10px;
+    font-size: 20px;
+}
+
+.hover-info p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Ensure the navbar stays at the top of the page */
+.navbar {
+    background-color: #ffffff; /* White background */
+    border-bottom: 2px solid #ddd; /* Border for separation */
+    padding: 1rem 1.5rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000; /* Ensure it's always at the top */
+}
+
+/* Align all menu items to the right */
+.navbar-nav {
+    margin-left: auto; /* This will push all the items to the right */
+}
+
+    /* Style the individual menu items */
+    .navbar-nav .nav-item {
+        margin-left: 1.5rem; /* Space between each menu item */
+    }
+
+        /* Style the menu links */
+        .navbar-nav .nav-item a {
+            color: #333; /* Dark text color */
+            font-weight: 500;
+            font-size: 16px;
+            padding: 8px 16px; /* Padding inside each menu item */
+            text-transform: uppercase; /* Make the text uppercase */
+        }
+
+            /* Hover effect for links */
+            .navbar-nav .nav-item a:hover {
+                color: #007bff; /* Blue color on hover */
+                text-decoration: none; /* Remove underline on hover */
+            }
+
+        /* Make the dropdown menu appear at the right */
+        .navbar-nav .nav-item.dropdown .dropdown-menu {
+            left: auto;
+            right: 0; /* Align the dropdown to the right of the button */
+        }
+
+/* Hamburger toggle button styling for mobile screens */
+.navbar-toggler {
+    border-color: #007bff; /* Border color of the hamburger icon */
+}
+
+.navbar-toggler-icon {
+    background-color: #007bff; /* Color of the hamburger icon */
+}
+
+/* Logo and brand name inside the navbar */
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+    .navbar-brand img {
+        height: 50px; /* Set the size of the logo */
+        width: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 12px; /* Space between logo and the brand name */
+    }
+
+.system-name {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+/* Make sure that the navbar is responsive */
+@media (max-width: 991px) {
+    .navbar-nav {
+        margin-left: 0; /* Ensure navbar items stack correctly on smaller screens */
+    }
+
+        .navbar-nav .nav-item {
+            margin-left: 0; /* Remove left margin for mobile */
+        }
+}
+
+/* Dropdown menu styling */
+.navbar-nav .nav-item.dropdown .dropdown-menu {
+    left: auto;
+    right: 0; /* Align the dropdown to the right of the button */
+    font-family: inherit; /* Inherit the default font */
+    font-size: inherit; /* Inherit font size */
+    color: inherit; /* Inherit font color */
+}
+
+/* Make dropdown items inherit the default font too */
+.navbar-nav .nav-item.dropdown .dropdown-item {
+    font-family: inherit; /* Inherit the default font */
+    font-size: inherit; /* Inherit font size */
+    color: inherit; /* Inherit text color */
+    padding: 0.5rem 1rem; /* Adjust the padding for better spacing */
+}
+
+    /* Optional: Add hover effect for dropdown items */
+    .navbar-nav .nav-item.dropdown .dropdown-item:hover {
+        color: #007bff; /* Change color to blue on hover */
+        background-color: rgba(0, 123, 255, 0.1); /* Light blue background on hover */
+    }

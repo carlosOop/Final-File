@@ -1,0 +1,26 @@
+﻿@page
+@{
+    Layout = "_Layout";  // Ensure layout is applied
+}
+
+<h2>Profile</h2>
+
+<div class="profile-info">
+    <img src="@Url.Content(ViewBag.ProfilePhoto)" alt="Profile Photo" class="rounded-circle" style="height: 100px; width: 100px; object-fit: cover;" />
+    <h3>@ViewBag.FullName</h3>
+    <p>@ViewBag.Username</p>
+</div>
+
+<h4>Change Your Information</h4>
+
+<form method="post" asp-action="ChangeName">
+    <label for="newName">Change Name</label>
+    <input type="text" id="newName" name="newName" class="form-control" value="@ViewBag.FullName" />
+    <button type="submit" class="btn btn-primary">Change Name</button>
+</form>
+
+<form method="post" asp-action="ChangeUsername">
+    <label for="newUsername">Change Username</label>
+    <input type="text" id="newUsername" name="newUsername" class="form-control" value="@ViewBag.Username" />
+    <button type="submit" class="btn btn-primary">Change Username</button>
+</form>

@@ -1,0 +1,25 @@
+﻿@model ManageBooking.Models.Customer
+
+@{
+    Layout = "_Layout";
+}
+<link href="~/css/Delete.css" rel="stylesheet" />
+
+<div class="delete-page-wrapper">
+    <div class="delete-box">
+        <h2 class="form-title">Delete Customer</h2>
+
+        <form asp-action="DeleteConfirmed" method="post" class="delete-form">
+            <input type="hidden" name="CustomerId" value="@Model.CustomerId" />
+
+            <p class="confirm-message">
+                Are you sure you want to delete the customer <strong>@Model.Name</strong>?
+            </p>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-danger">Delete</button>
+                <a href="@Url.Action("ManageRoom", "Customer")" class="btn btn-secondary ms-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,265 @@
+﻿@model List<ManageBooking.Models.Customer>
+
+<div class="container my-4">
+    <h2 class="text-center mb-4">Manage Room</h2>
+    <link rel="stylesheet" href="~/css/Manage.css" asp-append-version="true">
+
+    <!-- Display any error messages -->
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    @if (Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="customerTable">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Mobile Number</th>
+                        <th>Nationality</th>
+                        <th>Gender</th>
+                        <th>ID</th>
+                        <th>Address</th>
+                        <th>Bed Type</th>
+                        <th>Room Type</th>
+                        <th>Room Number</th>
+                        <th>Rate per Day</th>
+                        <th>Total Bill</th>
+                        <th>Birth Date</th>
+                        <th>Check In</th>
+                        <th>Check Out</th>
+                        <th>Status</th>
+                        <th class="text-center" style="min-width: 150px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var customer in Model)
+                    {
+                        <tr>
+                            <td>@customer.Name</td>
+                            <td>@customer.MobileNumber</td>
+                            <td>@customer.Nationality</td>
+                            <td>@customer.Gender</td>
+                            <td>@customer.ID</td>
+                            <td>@customer.Address</td>
+                            <td>@customer.BedType</td>
+                            <td>@customer.RoomType</td>
+                            <td>@customer.RoomNumber</td>
+                            <td>₱@customer.RatePerDay.ToString("N2")</td>
+                            <td>₱@customer.TotalBill.ToString("N2")</td>
+                            <td>@customer.BirthDate.ToShortDateString()</td>
+                            <td>@customer.CheckIn.ToString("g")</td>
+                            <td>@customer.CheckOut.ToString("g")</td>
+                            <td class="fw-bold text-@(customer.IsCheckedOut ? "danger" : "success")">
+                                @(customer.IsCheckedOut ? "Checked Out" : "In Hotel")
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group">
+                                    <!-- Edit Button -->
+                                    <a href="@Url.Action("Edit", "Customer", new { customerId = customer.CustomerId })"
+                                       class="btn btn-sm btn-warning"
+                                       title="Edit Customer">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+
+                                    <!-- Delete Button -->
+                                    <button type="button"
+                                            class="btn btn-sm btn-danger delete-btn"
+                                            title="Delete Customer"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal"
+                                            data-customer-id="@customer.CustomerId"
+                                            data-customer-name="@customer.Name">
+                                        <i class="bi bi-trash3"></i>
+                                    </button>
+
+                                    <!-- Checkout Button (only if not checked out) -->
+                                    @if (!customer.IsCheckedOut)
+                                    {
+                                        <button type="button"
+                                                class="btn btn-sm btn-success checkout-btn"
+                                                title="Checkout Customer"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#checkoutModal"
+                                                data-customer-id="@customer.CustomerId"
+                                                data-customer-name="@customer.Name">
+                                            <i class="bi bi-box-arrow-right"></i>
+                                        </button>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info text-center">
+            <h4>No active customers found</h4>
+            <p>There are currently no customers checked in.</p>
+            <a asp-action="CustomerRegistration" class="btn btn-primary">Add New Customer</a>
+        </div>
+    }
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="deleteForm" method="post" asp-action="DeleteConfirmed">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger" id="deleteModalLabel">Confirm Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete <strong id="deleteCustomerName">this customer</strong>?
+                    <input type="hidden" name="CustomerId" id="deleteCustomerId" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Checkout Modal -->
+<div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="checkoutForm" method="post" asp-action="CheckoutConfirmed">
+                <div class="modal-header">
+                    <h5 class="modal-title text-success" id="checkoutModalLabel">Confirm Checkout</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to checkout <strong id="checkoutCustomerName">this customer</strong>?
+                    <input type="hidden" name="CustomerId" id="checkoutCustomerId" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-success">Checkout</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('ManageRoom page loaded');
+
+            // Handle delete buttons
+            const deleteButtons = document.querySelectorAll(".delete-btn");
+            console.log('Found delete buttons:', deleteButtons.length);
+
+            deleteButtons.forEach(function(btn) {
+                btn.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    const customerId = this.getAttribute("data-customer-id");
+                    const customerName = this.getAttribute("data-customer-name");
+
+                    console.log('Delete button clicked:', { customerId, customerName });
+
+                    if (customerId && customerName) {
+                        document.getElementById("deleteCustomerId").value = customerId;
+                        document.getElementById("deleteCustomerName").textContent = customerName;
+                    } else {
+                        console.error('Missing customer data for delete');
+                    }
+                });
+            });
+
+            // Handle checkout buttons
+            const checkoutButtons = document.querySelectorAll(".checkout-btn");
+            console.log('Found checkout buttons:', checkoutButtons.length);
+
+            checkoutButtons.forEach(function(btn) {
+                btn.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    const customerId = this.getAttribute("data-customer-id");
+                    const customerName = this.getAttribute("data-customer-name");
+
+                    console.log('Checkout button clicked:', { customerId, customerName });
+
+                    if (customerId && customerName) {
+                        document.getElementById("checkoutCustomerId").value = customerId;
+                        document.getElementById("checkoutCustomerName").textContent = customerName;
+                    } else {
+                        console.error('Missing customer data for checkout');
+                    }
+                });
+            });
+
+            // Test if modals exist
+            const deleteModal = document.getElementById('deleteModal');
+            const checkoutModal = document.getElementById('checkoutModal');
+            console.log('Delete modal exists:', !!deleteModal);
+            console.log('Checkout modal exists:', !!checkoutModal);
+           
+            if (checkoutModal) {
+                checkoutModal.addEventListener('show.bs.modal', function(e) {
+                    console.log('Checkout modal is about to show');
+                });
+                checkoutModal.addEventListener('shown.bs.modal', function(e) {
+                    console.log('Checkout modal is now shown');
+                });
+            }
+
+            if (deleteModal) {
+                deleteModal.addEventListener('show.bs.modal', function(e) {
+                    console.log('Delete modal is about to show');
+                });
+                deleteModal.addEventListener('shown.bs.modal', function(e) {
+                    console.log('Delete modal is now shown');
+                });
+            }
+        });
+    </script>
+}
+
+<style>
+    .btn-group .btn {
+        margin-right: 2px;
+    }
+
+        .btn-group .btn:last-child {
+            margin-right: 0;
+        }
+
+    /* Ensure buttons are always visible */
+    .btn-sm {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    /* Make action column wider to accommodate buttons */
+    #customerTable th:last-child,
+    #customerTable td:last-child {
+        min-width: 150px;
+        white-space: nowrap;
+    }
+</style>

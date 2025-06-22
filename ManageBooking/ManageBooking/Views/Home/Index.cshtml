@@ -1,0 +1,130 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<link rel="stylesheet" href="~/css/dashboard.css" asp-append-version="true" />
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hielo Content</title>   
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>WELCOME TO HOTEL</h1>
+            <p class="subtitle">Where Every Stay Feels Like Coming Home.</p>
+            <p class="description">Enjoy warm hospitality, cozy rooms, and thoughtful amenities that make every visit familiar and relaxing.</p>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Luxury Hotel Experience</h2>
+                <p>Experience unparalleled comfort and elegance at our premium hotel, where every detail is crafted for your perfect stay.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🏨</div>
+                    <h3>Luxury Accommodations</h3>
+                    <p>Spacious rooms and suites featuring premium amenities, breathtaking views, and elegant furnishings designed for ultimate comfort and relaxation during your stay.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🍽️</div>
+                    <h3>Fine Dining</h3>
+                    <p>Award-winning restaurants offering exquisite cuisine crafted by world-class chefs, featuring local specialties and international flavors in elegant dining atmospheres.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🏊</div>
+                    <h3>Premium Amenities</h3>
+                    <p>State-of-the-art fitness center, luxurious spa services, infinity pool, and 24/7 concierge service to ensure every moment of your stay exceeds expectations.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🌟</div>
+                    <h3>Exceptional Service</h3>
+                    <p>Personalized guest services with multilingual staff, valet parking, room service, and dedicated event coordination to make your stay truly memorable and effortless.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="container">
+            <div class="content-grid">
+                <div class="content-text fade-in">
+                    <h2>Lorem Ipsum</h2>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+                        and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+                </div>
+                <div class="content-image fade-in">
+                    <img src="/Images/deluxe.jpg" alt="Design Image"/>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parallax Section -->
+    <section class="parallax-section">
+        <div class="parallax-content">
+            <h2>What is Lorem Ipsum?s</h2>
+            <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+                and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            </p>
+        </div>
+    </section>
+
+    <!-- Additional Content Section -->
+    <section class="content-section">
+        <div class="container">
+            <div class="content-grid">
+                <div class="content-image fade-in">
+                    <img src="/Images/suite.jpg" alt="Feature Image" /> 
+                </div>
+                <div class="content-text fade-in">
+                    <h2>Lorem Ipsum</h2>
+                    <p>
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+                        and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                    </p>
+                    <p>
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling for better UX
+        document.documentElement.style.scrollBehavior = 'smooth';
+    </script>
+</body>
+</html>

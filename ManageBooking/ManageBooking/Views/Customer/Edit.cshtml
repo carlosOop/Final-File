@@ -1,0 +1,149 @@
+﻿@model ManageBooking.Models.Customer
+<link href="~/css/Edit.css" rel="stylesheet" />
+
+<div class="edit-page-wrapper">
+    <div class="edit-form-box">
+        <h2 class="form-title">Edit Customer</h2>
+
+        <!-- Display validation errors -->
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <li>@error.ErrorMessage</li>
+                    }
+                </ul>
+            </div>
+        }
+
+        <!-- Display success/error messages -->
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">@TempData["Error"]</div>
+        }
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success">@TempData["Success"]</div>
+        }
+
+        <form asp-action="Edit" method="post" class="edit-form">
+            <!-- CRITICAL: Include all required hidden fields -->
+            <input type="hidden" asp-for="CustomerId" />
+            <input type="hidden" asp-for="UserId" />
+            <input type="hidden" asp-for="IsCheckedOut" />
+
+            <div class="form-group">
+                <label asp-for="Name">Name</label>
+                <input asp-for="Name" class="form-control" required />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MobileNumber">Mobile Number</label>
+                <input asp-for="MobileNumber" class="form-control" required />
+                <span asp-validation-for="MobileNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Nationality">Nationality</label>
+                <input asp-for="Nationality" class="form-control" required />
+                <span asp-validation-for="Nationality" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Gender">Gender</label>
+                <select asp-for="Gender" class="form-control" required>
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ID">ID</label>
+                <input asp-for="ID" class="form-control" required />
+                <span asp-validation-for="ID" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Address">Address</label>
+                <textarea asp-for="Address" class="form-control" rows="3" required></textarea>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="BedType">Bed Type</label>
+                <select asp-for="BedType" class="form-control" required>
+                    <option value="">Select Bed Type</option>
+                    <option value="Single">Single</option>
+                    <option value="Double">Double</option>
+                    <option value="Queen">Queen</option>
+                    <option value="King">King</option>
+                </select>
+                <span asp-validation-for="BedType" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RoomType">Room Type</label>
+                <select asp-for="RoomType" class="form-control" required>
+                    <option value="">Select Room Type</option>
+                    <option value="Standard">Standard</option>
+                    <option value="Deluxe">Deluxe</option>
+                    <option value="Suite">Suite</option>
+                    <option value="Presidential">Presidential</option>
+                </select>
+                <span asp-validation-for="RoomType" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RoomNumber">Room Number</label>
+                <input asp-for="RoomNumber" class="form-control" required />
+                <span asp-validation-for="RoomNumber" class="text-danger"></span>
+                @if (ViewBag.OccupiedRooms != null && ((List<string>)ViewBag.OccupiedRooms).Any())
+                {
+                    <small class="form-text text-muted">
+                        Occupied rooms: @string.Join(", ", (List<string>)ViewBag.OccupiedRooms)
+                    </small>
+                }
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RatePerDay">Price</label>
+                <input asp-for="RatePerDay" type="number" step="0.01" class="form-control" required />
+                <span asp-validation-for="RatePerDay" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="BirthDate">Birth Date</label>
+                <input asp-for="BirthDate" type="date" class="form-control" required />
+                <span asp-validation-for="BirthDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CheckIn">Check In</label>
+                <input asp-for="CheckIn" type="datetime-local" class="form-control" required />
+                <span asp-validation-for="CheckIn" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CheckOut">Check Out</label>
+                <input asp-for="CheckOut" type="datetime-local" class="form-control" required />
+                <span asp-validation-for="CheckOut" class="text-danger"></span>
+            </div>
+
+            <div class="form-actions mt-4">
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <a asp-action="ManageRoom" class="btn btn-secondary ms-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

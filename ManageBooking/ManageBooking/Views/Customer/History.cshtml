@@ -1,0 +1,108 @@
+﻿@model List<ManageBooking.Models.Customer>
+
+<link rel="stylesheet" href="~/css/History.css" asp-append-version="true">
+<div class="history-container">
+    <div class="history-header">
+        <h2 class="history-title">Customer History</h2>
+        <div class="filter-section">
+            <label for="filter" class="filter-label">Filter by:</label>
+            <select id="filter" class="filter-dropdown">
+                <option value="all">All Customers</option>
+                <option value="in-hotel">Customer in Hotel</option>
+                <option value="checkout">Checkout Customers</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="table-wrapper">
+        <table class="history-table">
+            <thead class="table-header">
+                <tr>
+                    <th>Name</th>
+                    <th>Mobile Number</th>
+                    <th>Nationality</th>
+                    <th>Gender</th>
+                    <th>ID</th>
+                    <th>Address</th>
+                    <th>Bed Type</th>
+                    <th>Room Type</th>
+                    <th>Room Number</th>
+                    <th>Rate per Day</th>
+                    <th>Total Bill</th>
+                    <th>Birth Date</th>
+                    <th>Check In</th>
+                    <th>Check Out</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="customerTableBody" class="table-body">
+                @foreach (var customer in Model)
+                {
+                    <tr class="customer-row @(customer.IsCheckedOut ? "checked-out-row" : "in-hotel-row")"
+                        data-status="@((customer.IsCheckedOut ? "checked-out" : "in-hotel"))">
+                        <td class="name-cell">@customer.Name</td>
+                        <td>@customer.MobileNumber</td>
+                        <td>@customer.Nationality</td>
+                        <td>@customer.Gender</td>
+                        <td>@customer.ID</td>
+                        <td class="address-cell">@customer.Address</td>
+                        <td>@customer.BedType</td>
+                        <td>@customer.RoomType</td>
+                        <td class="room-number">@customer.RoomNumber</td>
+                        <td class="price-cell">₱@customer.RatePerDay.ToString("N2")</td>
+                        <td class="price-cell">₱@customer.TotalBill.ToString("N2")</td>
+                        <td>@customer.BirthDate.ToShortDateString()</td>
+                        <td>@customer.CheckIn.ToString("g")</td>
+                        <td>@customer.CheckOut.ToString("g")</td>
+                        <td>
+                            <span class="status-badge @(customer.IsCheckedOut ? "status-checkout" : "status-inhotel")">
+                                @(customer.IsCheckedOut ? "Checked Out" : "In Hotel")
+                            </span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        // Function to filter the table based on selected filter
+        function filterCustomers() {
+            var filterValue = document.getElementById('filter').value;
+            var rows = document.querySelectorAll('.customer-row');
+            console.log('Filtering customers with value:', filterValue);
+            console.log('Found rows:', rows.length);
+
+            rows.forEach(function(row) {
+                if (filterValue === "all") {
+                    row.style.display = ''; // Show all
+                } else if (filterValue === "in-hotel" && row.dataset.status === 'in-hotel') {
+                    row.style.display = ''; // Show only customers in hotel
+                } else if (filterValue === "checkout" && row.dataset.status === 'checked-out') {
+                    row.style.display = ''; // Show only checked-out customers
+                } else {
+                    row.style.display = 'none'; // Hide non-matching rows
+                }
+            });
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('History page loaded');
+
+            // Set up filter event listener
+            const filterSelect = document.getElementById('filter');
+            if (filterSelect) {
+                filterSelect.addEventListener('change', function() {
+                    console.log('Filter changed to:', this.value);
+                    filterCustomers(); // Apply filter on change
+                });
+            }
+
+            // Apply initial filter
+            filterCustomers();
+        });
+    </script>
+}

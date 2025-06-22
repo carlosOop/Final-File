@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<div class="container">
+    <h2>Change Profile Photo</h2>
+
+    <form asp-action="ChangePhoto" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="profileUpload">Select New Profile Photo: </label>
+            <input type="file" class="form-control" name="ProfilePhoto" accept="image/*" />
+        </div>
+        <button type="submit" class="btn btn-primary">Change Photo</button>
+    </form>
+</div>

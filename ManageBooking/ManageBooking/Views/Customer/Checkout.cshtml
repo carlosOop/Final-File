@@ -1,0 +1,106 @@
+﻿@model List<ManageBooking.Models.Customer>
+
+<link rel="stylesheet" href="~/css/Checkout.css" asp-append-version="true">
+<div class="checkout-container">
+    <div class="checkout-header">
+        <div class="header-content">
+            <div class="header-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="header-text">
+                <h2>Checkout - Completed Checkouts</h2>
+                <p class="header-subtitle">Manage completed customer checkouts</p>
+            </div>
+        </div>
+    </div>
+    
+    @if (Model == null || !Model.Any())
+    {
+        <div class="empty-state-card">
+            <div class="empty-state-icon">
+                <i class="fas fa-inbox"></i>
+            </div>
+            <h4>No checked out customers found.</h4>
+            <p>Customers will appear here after they have been checked out.</p>
+        </div>
+    }
+    else
+    {
+        <div class="stats-card">
+            <div class="stats-content">
+                <div class="stats-info">
+                    <div class="stats-number">@Model.Count()</div>
+                    <div class="stats-label">Total Checked Out Customers</div>
+                </div>
+                <div class="stats-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="table-card">
+            <div class="table-responsive">
+                <table class="checkout-table">
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-user"></i> Name</th>
+                            <th><i class="fas fa-phone"></i> Mobile Number</th>
+                            <th><i class="fas fa-door-open"></i> Room Number</th>
+                            <th><i class="fas fa-sign-in-alt"></i> Check In</th>
+                            <th><i class="fas fa-sign-out-alt"></i> Check Out</th>
+                            <th><i class="fas fa-info-circle"></i> Status</th>
+                            <th><i class="fas fa-cogs"></i> Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var customer in Model.Where(c => c.IsCheckedOut))  
+                        {
+                            <tr class="table-row">
+                                <td class="customer-name">@customer.Name</td>
+                                <td class="mobile-number">@customer.MobileNumber</td>
+                                <td><span class="room-badge">@customer.RoomNumber</span></td>
+                                <td class="datetime">@customer.CheckIn.ToString("MMM dd, yyyy hh:mm tt")</td>
+                                <td class="datetime">@customer.CheckOut.ToString("MMM dd, yyyy hh:mm tt")</td>
+                                <td>
+                                    <span class="status-badge status-success">
+                                        <i class="fas fa-check"></i> Checked Out
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <!-- Option to view details or print receipt -->
+                                        <a href="@Url.Action("Edit", "Customer", new { customerId = customer.CustomerId })" 
+                                           class="btn btn-info">
+                                            <i class="fas fa-eye"></i> View Details
+                                        </a>                                                                            
+                                        <!-- Reactivate Customer Button - Simplified Version -->
+                                        <form method="post" 
+                                              action="@Url.Action("ReactivateCustomer", "Customer")" 
+                                              style="display:inline;" 
+                                              onsubmit="return confirm('Are you sure you want to reactivate this customer?');">
+    
+                                            <input type="hidden" name="customerId" value="@customer.CustomerId" />
+    
+                                            <button type="submit" class="btn btn-warning" title="Reactivate this customer">
+                                                <i class="fas fa-undo"></i> Reactivate
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    
+    <div class="navigation-section">
+        <a href="@Url.Action("ManageRoom", "Customer")" class="btn btn-primary">
+            <i class="fas fa-arrow-left"></i> Back to Manage Rooms
+        </a>
+        <a href="@Url.Action("History", "Customer")" class="btn btn-secondary">
+            <i class="fas fa-history"></i> View All History
+        </a>
+    </div>
+</div>

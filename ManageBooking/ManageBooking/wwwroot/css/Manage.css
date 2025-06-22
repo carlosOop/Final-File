@@ -1,0 +1,324 @@
+﻿/* Manage.css */
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f0f2f5; /* Light grey background for the whole page */
+    color: #333;
+}
+
+.container.my-4 {
+    padding: 30px;
+    background-color: #F5F5F7; /* White background for the main content area */
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); /* More pronounced shadow */
+    margin-top: 30px !important;
+    margin-bottom: 30px !important;
+    max-width: 95%; /* Adjust max-width for wider screens */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h2.text-center {
+    color: #2c3e50; /* Darker blue-grey for main heading */
+    font-weight: 700;
+    margin-bottom: 30px;
+    font-size: 2.2em;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+}
+
+/* Alert messages */
+.alert {
+    padding: 1rem 1.5rem;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-size: 0.95em;
+    border-width: 1px;
+}
+
+.alert-danger {
+    background-color: #fddddd; /* Lighter red */
+    color: #721c24; /* Darker red text */
+    border-color: #f5c6cb;
+}
+
+.alert-success {
+    background-color: #d4edda; /* Lighter green */
+    color: #155724; /* Darker green text */
+    border-color: #c3e6cb;
+}
+
+.alert-info {
+    background-color: #d1ecf1; /* Lighter blue */
+    color: #0c5460; /* Darker blue text */
+    border-color: #bee5eb;
+}
+
+.alert ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+/* Table container for horizontal scrolling */
+.table-responsive {
+    overflow-x: auto; /* Enable horizontal scrolling */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on touch devices */
+    border: 1px solid #e0e6ed; /* Light border around the scrollable area */
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03); /* Subtle shadow for the table */
+}
+
+.table {
+    width: 100%;
+    min-width: 1500px; /* Minimum width for the table to enable scrolling. ADJUST THIS as needed */
+    border-collapse: collapse;
+    margin-bottom: 0; /* Remove default table bottom margin */
+}
+
+.table-dark {
+    background-color: #007bff !important; /* Force this blue color */
+    color: white;
+}
+
+    .table-dark th {
+        padding: 15px 20px;
+        font-weight: 600;
+        text-align: left;
+        border-bottom: 3px solid #0056b3 !important; /* Force this darker border color */
+        white-space: nowrap; /* Prevent header text from wrapping */
+    }
+
+.table tbody tr {
+    transition: background-color 0.2s ease; /* Smooth hover effect */
+}
+
+    .table tbody tr:nth-child(even) {
+        background-color: #f9fbfd; /* Light stripe for readability */
+    }
+
+    .table tbody tr:hover {
+        background-color: #eaf6ff; /* Light blue on hover */
+    }
+
+.table td {
+    padding: 12px 20px;
+    border-bottom: 1px solid #e0e6ed; /* Light border between cells */
+    vertical-align: middle; /* Center content vertically */
+    white-space: nowrap; /* Prevent normal text wrapping to enable scrolling */
+}
+
+    /* Specific column styling */
+    .table td:nth-child(1), /* Name */
+    .table td:nth-child(6) /* Address */ {
+        white-space: normal; /* Allow name and address to wrap */
+        word-wrap: break-word;
+        min-width: 150px; /* Give them a reasonable minimum width */
+        max-width: 250px; /* Prevent them from becoming excessively wide */
+    }
+
+    .table td:nth-child(10), /* Rate per Day */
+    .table td:nth-child(11) /* Total Bill */ {
+        text-align: right; /* Align currency to the right */
+        font-weight: 600;
+    }
+
+/* Status badge in table */
+.fw-bold {
+    font-weight: bold !important;
+}
+
+.text-success {
+    color: #28a745 !important; /* Green for In Hotel */
+}
+
+.text-danger {
+    color: #dc3545 !important; /* Red for Checked Out */
+}
+
+
+/* Action Buttons within the table */
+.btn-group .btn {
+    margin-right: 5px; /* Space between buttons */
+    border-radius: 6px; /* Slightly rounded buttons */
+    transition: all 0.2s ease; /* Smooth transitions for hover/focus */
+    font-size: 0.9em; /* Slightly smaller font for buttons in table */
+    padding: 0.4rem 0.8rem; /* Adjusted padding */
+}
+
+    .btn-group .btn:last-child {
+        margin-right: 0; /* No margin on the last button */
+    }
+
+.btn-sm {
+    /* Bootstrap's .btn-sm is already defined, but ensuring consistency */
+    padding: 0.3rem 0.6rem;
+    font-size: 0.85rem;
+}
+
+/* Custom button colors and effects for actions */
+.btn-warning {
+    background-color: #ffc107; /* Standard warning yellow */
+    border-color: #ffc107;
+    color: #343a40; /* Dark text for better contrast */
+}
+
+    .btn-warning:hover {
+        background-color: #e0a800; /* Darker yellow on hover */
+        border-color: #d39e00;
+        transform: translateY(-1px); /* Slight lift effect */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+.btn-danger {
+    background-color: #dc3545; /* Standard danger red */
+    border-color: #dc3545;
+}
+
+    .btn-danger:hover {
+        background-color: #c82333; /* Darker red on hover */
+        border-color: #bd2130;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+.btn-success {
+    background-color: #28a745; /* Standard success green */
+    border-color: #28a745;
+}
+
+    .btn-success:hover {
+        background-color: #218838; /* Darker green on hover */
+        border-color: #1e7e34;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+/* Icons within buttons */
+.btn-group .bi {
+    vertical-align: middle; /* Align icon nicely with text (if any) */
+    font-size: 1.1em; /* Make icons slightly larger */
+}
+
+
+/* Modals styling (optional, but good to make them cohesive) */
+.modal-content {
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+    border-bottom: 1px solid #e0e6ed;
+    padding: 15px 20px;
+}
+
+.modal-title {
+    font-weight: 600;
+    color: #343a40;
+}
+
+.modal-body {
+    padding: 20px;
+    font-size: 1.05em;
+    color: #555;
+}
+
+.modal-footer {
+    border-top: 1px solid #e0e6ed;
+    padding: 15px 20px;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: white;
+}
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        border-color: #545b62;
+    }
+
+/* No Active Customers / Add New Customer Section */
+.alert.alert-info.text-center {
+    margin-top: 40px;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #e3f2fd; /* Lighter blue info background */
+    border-color: #90caf9;
+    color: #1a237e; /* Dark blue text */
+}
+
+.alert.alert-info h4 {
+    color: #1a237e;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.alert.alert-info p {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}
+
+.alert.alert-info .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    padding: 10px 25px;
+    font-size: 1.1em;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+    .alert.alert-info .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+    }
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .container.my-4 {
+        padding: 20px;
+        margin: 15px !important;
+    }
+
+    h2.text-center {
+        font-size: 1.8em;
+    }
+}
+
+@media (max-width: 768px) {
+    .table-dark th, .table td {
+        padding: 10px 15px;
+        font-size: 0.9em;
+    }
+
+    .btn-group .btn {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8em;
+    }
+
+    .table-responsive {
+        border-radius: 6px;
+    }
+}
+
+@media (max-width: 576px) {
+    .container.my-4 {
+        padding: 15px;
+    }
+
+    h2.text-center {
+        font-size: 1.6em;
+        margin-bottom: 20px;
+    }
+
+    .alert {
+        padding: 0.8rem 1rem;
+        font-size: 0.85em;
+    }
+    /* Reduce min-width for very small screens if necessary, but keep scrolling */
+    .table {
+        min-width: 1000px; /* Adjust this for very small mobile screens */
+    }
+}

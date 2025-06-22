@@ -1,0 +1,149 @@
+﻿/* History.css */
+
+.history-container {
+    padding: 20px;
+    background-color: #f8f9fa; /* Light background for the whole container */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    margin: 20px;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.history-title {
+    color: #343a40; /* Darker text for heading */
+    margin: 0;
+    font-size: 1.8em;
+}
+
+.filter-section {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between label and dropdown */
+}
+
+.filter-label {
+    font-weight: bold;
+    color: #555;
+}
+
+.filter-dropdown {
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+/* --- Table Styles --- */
+
+.table-wrapper {
+    /* This is the key for horizontal scrolling */
+    overflow-x: auto; /* Enables horizontal scrollbar when content overflows */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on touch devices */
+    border: 1px solid #dee2e6; /* Border around the scrollable area */
+    border-radius: 6px; /* Match container border-radius */
+}
+
+.history-table {
+    width: 100%; /* Make the table take full width of its wrapper */
+    min-width: 1200px; /* Set a minimum width for the table to ensure it overflows for scrolling */
+    /* Adjust this value based on your content and how wide it needs to be */
+    border-collapse: collapse;
+    margin: 0; /* Remove any default margins */
+    background-color: #fff; /* White background for the table */
+}
+
+.table-header th {
+    background-color: #343a40; /* Primary blue for header */
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: bold;
+    white-space: nowrap; /* Prevent header text from wrapping */
+    border-bottom: 2px solid #0056b3; /* Darker border for header */
+}
+
+.table-body td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #e9ecef; /* Light border between rows */
+    white-space: nowrap; /* Keep content in a single line, allowing horizontal scroll */
+}
+
+.customer-row:nth-child(even) {
+    background-color: #f2f2f2; /* Zebra striping for readability */
+}
+
+.customer-row:hover {
+    background-color: #e2f4ff; /* Light blue on hover */
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: 0.85em;
+    display: inline-block; /* Ensures padding and border work correctly */
+}
+
+.status-inhotel {
+    background-color: #28a745; /* Green for in-hotel */
+    color: white;
+}
+
+.status-checkout {
+    background-color: #dc3545; /* Red for checked-out */
+    color: white;
+}
+
+/* Specific cell widths/styles for better presentation */
+.name-cell, .address-cell {
+    min-width: 150px; /* Ensure these cells are wide enough */
+    max-width: 250px; /* Prevent them from becoming too wide */
+    white-space: normal; /* Allow text to wrap within these specific cells */
+    word-wrap: break-word; /* Break long words */
+}
+
+.room-number {
+    min-width: 80px;
+}
+
+.price-cell {
+    text-align: right; /* Align prices to the right */
+    min-width: 100px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .history-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .history-title {
+        font-size: 1.5em;
+    }
+
+    .filter-section {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .filter-dropdown {
+        flex-grow: 1; /* Allow dropdown to take available width */
+    }
+
+    .history-container {
+        margin: 10px;
+        padding: 15px;
+    }
+}

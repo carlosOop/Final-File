@@ -1,0 +1,27 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="~/css/ChangeName.css" />
+<div class="container">
+    <div class="card change-name-card">
+        <div class="card-header">
+            <h2>Change Name</h2>
+        </div>
+        <div class="card-body">
+            <form asp-action="ChangeName" method="post">
+                <div class="form-group">
+                    <label for="currentName">Current Name: </label>
+                    <input type="text" class="form-control" value="@ViewBag.CurrentName" disabled />
+                </div>
+                <div class="form-group">
+                    <label for="newName">New Name: </label>
+                    <input type="text" class="form-control" name="newName" required />
+                </div>
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-primary">Change Name</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

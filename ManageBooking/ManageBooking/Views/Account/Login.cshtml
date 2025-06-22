@@ -1,0 +1,418 @@
+﻿@{
+    ViewData["Title"] = "Login / Sign Up";
+    Layout = null; 
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/auth.css" asp-append-version="true">
+</head>
+<body>
+
+    <section class="user">
+        <div class="user_options-container">
+            <!-- User Options Text -->
+            <div class="user_options-text">
+                <!-- Sign Up Section -->
+                <div class="user_options-unregistered" id="signupSection">
+                    <h2 class="user_unregistered-title">Don't have an account?</h2>
+                    <p class="user_unregistered-text">Create now!</p>
+                    <button class="user_unregistered-signup" id="signup-button">Sign up</button>
+                </div>
+
+                <!-- Login Section -->
+                <div class="user_options-registered" id="loginSection">
+                    <h2 class="user_registered-title">Already have an account!</h2>
+                    <p class="user_registered-text">Get started..</p>
+                    <button class="user_registered-login" id="login-button">Login</button>
+                </div>
+            </div>
+
+            <!-- Forms Section -->
+            <div class="user_options-forms" id="user_options-forms">
+                <!-- Login Form -->
+                <div class="user_forms-login" id="loginForm">
+                    <h2 class="forms_title">Login</h2>
+
+                    <!-- Display validation messages -->
+                    @if (ViewData.ModelState[""]?.Errors.Count > 0)
+                    {
+                        <div class="error-message" style="color: red; margin-bottom: 15px; text-align: center;">
+                            @foreach (var error in ViewData.ModelState[""].Errors)
+                            {
+                                <p>@error.ErrorMessage</p>
+                            }
+                        </div>
+                    }
+
+                    <form asp-action="Login" method="post" id="loginFormElement">
+                        <fieldset class="forms_fieldset">
+                            <div class="forms_field">
+                                <input type="text" placeholder="Username" class="forms_field-input" id="Username" name="Username" required autofocus />
+                            </div>
+                            <div class="forms_field password-container">
+                                <input type="password" placeholder="Password" class="forms_field-input" id="Password" name="Password" required />
+                                <!-- Eye Icon -->
+                                <i class="eye-icon" id="eye-toggle">&#128065;</i>
+                            </div>
+                            <!-- Validation message for password -->
+                            <div id="password-error" style="color: red; display: none;">Password must contain at least one uppercase letter, one special character, one number, and be at least 8 characters long.</div>
+                            <!-- Login validation message -->
+                            <div id="login-error" style="color: red; display: none;">Invalid input, please try again.</div>
+                        </fieldset>
+                        <div class="forms_buttons">
+                            <button type="button" class="forms_buttons-forgot" id="forgot-password-btn">Forgot password?</button>
+                            <input type="submit" value="Log In" class="forms_buttons-action">
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Sign Up Form -->
+                <div class="user_forms-signup" id="signupForm">
+                    <h2 class="forms_title">Sign Up</h2>
+
+                    <!-- Display validation messages for signup -->
+                    @if (ViewData.ModelState[""]?.Errors.Count > 0)
+                    {
+                        <div class="error-message" style="color: red; margin-bottom: 15px; text-align: center;">
+                            @foreach (var error in ViewData.ModelState[""].Errors)
+                            {
+                                <p>@error.ErrorMessage</p>
+                            }
+                        </div>
+                    }
+
+                    <form asp-action="Signup" method="post" id="signupFormElement">
+                        <fieldset class="forms_fieldset">
+                            <div class="forms_field">
+                                <input type="text" placeholder="First Name" class="forms_field-input" id="Name" name="Name" required />
+                            </div>
+                            <div class="forms_field">
+                                <input type="text" placeholder="Surname" class="forms_field-input" id="Surname" name="Surname" required />
+                            </div>
+                            <div class="forms_field">
+                                <input type="text" placeholder="Username" class="forms_field-input" id="SignupUsername" name="Username" required />
+                            </div>
+                            <div class="forms_field password-container">
+                                <input type="password" placeholder="Password" class="forms_field-input" id="SignupPassword" name="Password" required />
+                                <i class="eye-icon" id="signup-eye-toggle">&#128065;</i>
+                            </div>
+                            <div class="forms_field password-container">
+                                <input type="password" placeholder="Confirm Password" class="forms_field-input" id="ConfirmPassword" name="ConfirmPassword" required />
+                            </div>
+                            <!-- Signup password validation messages -->
+                            <div id="signup-password-error" style="color: red; display: none;">Password must contain at least one uppercase letter, one special character, one number, and be at least 8 characters long.</div>
+                            <div id="password-match-error" style="color: red; display: none;">Passwords do not match.</div>
+                        </fieldset>
+                        <div class="forms_buttons">
+                            <input type="submit" value="Sign up" class="forms_buttons-action">
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Forgot Password Form -->
+                <div class="user_forms-forgot" id="forgotPasswordForm" style="display: none;">
+                    <h2 class="forms_title">Reset Password</h2>
+
+                    <!-- Display validation messages for forgot password -->
+                    @if (ViewData.ModelState[""]?.Errors.Count > 0)
+                    {
+                        <div class="error-message">
+                            @foreach (var error in ViewData.ModelState[""].Errors)
+                            {
+                                <p>@error.ErrorMessage</p>
+                            }
+                        </div>
+                    }
+
+                    <!-- Display success message -->
+                    @if (TempData["Success"] != null)
+                    {
+                        <div class="success-message">
+                            @TempData["Success"]
+                        </div>
+                    }
+
+                    <form asp-action="ForgotPassword" method="post" id="forgotPasswordFormElement">
+                        <fieldset class="forms_fieldset">
+                            <div class="forms_field">
+                                <input type="text" placeholder="Enter your username" class="forms_field-input" id="ForgotUsername" name="Username" required />
+                            </div>
+                            <div class="forms_field password-container">
+                                <input type="password" placeholder="New Password" class="forms_field-input" id="NewPassword" name="NewPassword" required />
+                                <i class="eye-icon" id="forgot-eye-toggle">&#128065;</i>
+                            </div>
+                            <div class="forms_field password-container">
+                                <input type="password" placeholder="Confirm New Password" class="forms_field-input" id="ConfirmNewPassword" name="ConfirmNewPassword" required />
+                                <i class="eye-icon" id="forgot-confirm-eye-toggle">&#128065;</i>
+                            </div>
+                            <!-- Forgot password validation messages -->
+                            <div id="forgot-password-error" style="display: none;">Password must contain at least one uppercase letter, one special character, one number, and be at least 8 characters long.</div>
+                            <div id="forgot-password-match-error" style="display: none;">Passwords do not match.</div>
+                        </fieldset>
+                        <div class="forms_buttons">
+                            <button type="button" class="forms_buttons-back" id="back-to-login-btn">
+                                <span>← Back to Login</span>
+                            </button>
+                            <input type="submit" value="Reset Password" class="forms_buttons-action">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+                // Updated JavaScript - Replace your existing script section with this
+
+        const signupButton = document.getElementById("signup-button"),
+            loginButton = document.getElementById("login-button"),
+            userForms = document.getElementById("user_options-forms"),
+            signupForm = document.getElementById("signupForm"),
+            loginForm = document.getElementById("loginForm"),
+            forgotPasswordForm = document.getElementById("forgotPasswordForm"),
+            forgotPasswordBtn = document.getElementById("forgot-password-btn"),
+            backToLoginBtn = document.getElementById("back-to-login-btn");
+
+        // Toggle the signup and login forms
+        signupButton.addEventListener("click", () => {
+            userForms.classList.remove("bounceRight", "forgot-active");
+            userForms.classList.add("bounceLeft");
+
+            // Hide all forms first
+            signupForm.style.display = 'none';
+            loginForm.style.display = 'none';
+            forgotPasswordForm.style.display = 'none';
+
+            // Show signup form with proper visibility
+            setTimeout(() => {
+                signupForm.style.display = 'block';
+                signupForm.style.opacity = '1';
+                signupForm.style.visibility = 'visible';
+            }, 100);
+        }, false);
+
+        loginButton.addEventListener("click", () => {
+            userForms.classList.remove("bounceLeft", "forgot-active");
+            userForms.classList.add("bounceRight");
+
+            // Hide all forms first
+            signupForm.style.display = 'none';
+            loginForm.style.display = 'none';
+            forgotPasswordForm.style.display = 'none';
+
+            // Show login form with proper visibility
+            setTimeout(() => {
+                loginForm.style.display = 'block';
+                loginForm.style.opacity = '1';
+                loginForm.style.visibility = 'visible';
+            }, 100);
+        }, false);
+
+        // Show forgot password form
+        forgotPasswordBtn.addEventListener("click", () => {
+            userForms.classList.add("forgot-active");
+            userForms.classList.remove("bounceLeft", "bounceRight");
+
+            // Hide other forms
+            loginForm.style.display = 'none';
+            loginForm.style.opacity = '0';
+            loginForm.style.visibility = 'hidden';
+            signupForm.style.display = 'none';
+            signupForm.style.opacity = '0';
+            signupForm.style.visibility = 'hidden';
+
+            // Show forgot password form
+            forgotPasswordForm.style.display = 'block';
+            forgotPasswordForm.style.opacity = '1';
+            forgotPasswordForm.style.visibility = 'visible';
+        }, false);
+
+        // Back to login from forgot password
+        backToLoginBtn.addEventListener("click", () => {
+            userForms.classList.remove("forgot-active");
+
+            // Hide forgot password form
+            forgotPasswordForm.style.display = 'none';
+            forgotPasswordForm.style.opacity = '0';
+            forgotPasswordForm.style.visibility = 'hidden';
+
+            // Show login form
+            loginForm.style.display = 'block';
+            loginForm.style.opacity = '1';
+            loginForm.style.visibility = 'visible';
+        }, false);
+
+        // Password visibility toggle for login form
+        const passwordInput = document.getElementById("Password");
+        const eyeToggle = document.getElementById("eye-toggle");
+        eyeToggle.addEventListener("click", () => {
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+            } else {
+                passwordInput.type = "password";
+            }
+        });
+
+        // Password visibility toggle for signup form
+        const signupPasswordInput = document.getElementById("SignupPassword");
+        const signupEyeToggle = document.getElementById("signup-eye-toggle");
+        signupEyeToggle.addEventListener("click", () => {
+            if (signupPasswordInput.type === "password") {
+                signupPasswordInput.type = "text";
+            } else {
+                signupPasswordInput.type = "password";
+            }
+        });
+
+        // Password visibility toggle for forgot password form
+        const forgotPasswordInput = document.getElementById("NewPassword");
+        const forgotEyeToggle = document.getElementById("forgot-eye-toggle");
+        const forgotConfirmPasswordInput = document.getElementById("ConfirmNewPassword");
+        const forgotConfirmEyeToggle = document.getElementById("forgot-confirm-eye-toggle");
+
+        forgotEyeToggle.addEventListener("click", () => {
+            if (forgotPasswordInput.type === "password") {
+                forgotPasswordInput.type = "text";
+                forgotEyeToggle.innerHTML = "&#128064;"; // Closed eye
+            } else {
+                forgotPasswordInput.type = "password";
+                forgotEyeToggle.innerHTML = "&#128065;"; // Open eye
+            }
+        });
+
+        forgotConfirmEyeToggle.addEventListener("click", () => {
+            if (forgotConfirmPasswordInput.type === "password") {
+                forgotConfirmPasswordInput.type = "text";
+                forgotConfirmEyeToggle.innerHTML = "&#128064;"; // Closed eye
+            } else {
+                forgotConfirmPasswordInput.type = "password";
+                forgotConfirmEyeToggle.innerHTML = "&#128065;"; // Open eye
+            }
+        });
+
+        // Password validation function
+        function validatePassword(password) {
+            // Regex for password validation: Minimum 8 characters, at least one uppercase letter, one special character, one number
+            return /^(?=.*[A-Z])(?=.*[\W_])(?=.*\d).{8,}$/.test(password);
+        }
+
+        // Password validation for login
+        document.getElementById("Password").addEventListener("input", function() {
+            const password = this.value;
+            const passwordError = document.getElementById("password-error");
+
+            if (password.length > 0 && !validatePassword(password)) {
+                passwordError.style.display = "block";
+            } else {
+                passwordError.style.display = "none";
+            }
+        });
+
+        // Login form validation
+        document.getElementById("loginFormElement").addEventListener("submit", function(e) {
+            const password = document.getElementById("Password").value;
+            const loginError = document.getElementById("login-error");
+
+            if (!validatePassword(password)) {
+                e.preventDefault();
+                loginError.style.display = "block";
+                return false;
+            }
+            loginError.style.display = "none";
+        });
+
+        // Password validation for signup
+        document.getElementById("SignupPassword").addEventListener("input", function() {
+            const password = this.value;
+            const passwordError = document.getElementById("signup-password-error");
+
+            if (password.length > 0 && !validatePassword(password)) {
+                passwordError.style.display = "block";
+            } else {
+                passwordError.style.display = "none";
+            }
+        });
+
+        // Confirm password validation for signup
+        document.getElementById("ConfirmPassword").addEventListener("input", function() {
+            const password = document.getElementById("SignupPassword").value;
+            const confirmPassword = this.value;
+            const matchError = document.getElementById("password-match-error");
+
+            if (confirmPassword.length > 0 && password !== confirmPassword) {
+                matchError.style.display = "block";
+            } else {
+                matchError.style.display = "none";
+            }
+        });
+
+        // Signup form validation
+        document.getElementById("signupFormElement").addEventListener("submit", function(e) {
+            const password = document.getElementById("SignupPassword").value;
+            const confirmPassword = document.getElementById("ConfirmPassword").value;
+
+            if (!validatePassword(password)) {
+                e.preventDefault();
+                document.getElementById("signup-password-error").style.display = "block";
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                document.getElementById("password-match-error").style.display = "block";
+                return false;
+            }
+        });
+
+        // Password validation for forgot password
+        document.getElementById("NewPassword").addEventListener("input", function() {
+            const password = this.value;
+            const passwordError = document.getElementById("forgot-password-error");
+
+            if (password.length > 0 && !validatePassword(password)) {
+                passwordError.style.display = "block";
+            } else {
+                passwordError.style.display = "none";
+            }
+        });
+
+        // Confirm password validation for forgot password
+        document.getElementById("ConfirmNewPassword").addEventListener("input", function() {
+            const password = document.getElementById("NewPassword").value;
+            const confirmPassword = this.value;
+            const matchError = document.getElementById("forgot-password-match-error");
+
+            if (confirmPassword.length > 0 && password !== confirmPassword) {
+                matchError.style.display = "block";
+            } else {
+                matchError.style.display = "none";
+            }
+        });
+
+        // Forgot password form validation
+        document.getElementById("forgotPasswordFormElement").addEventListener("submit", function(e) {
+            const password = document.getElementById("NewPassword").value;
+            const confirmPassword = document.getElementById("ConfirmNewPassword").value;
+
+            if (!validatePassword(password)) {
+                e.preventDefault();
+                document.getElementById("forgot-password-error").style.display = "block";
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                document.getElementById("forgot-password-match-error").style.display = "block";
+                return false;
+            }
+        });
+
+    </script>
+
+</body>
+</html>

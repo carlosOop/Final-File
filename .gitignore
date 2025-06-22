@@ -1,0 +1,19 @@
+# Ignore Visual Studio folders/files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Ignore build folders
+bin/
+obj/
+
+# Ignore system and temp files
+*.log
+*.tmp
+*.cache
+*.DS_Store
+Thumbs.db
+ehthumbs.db
+

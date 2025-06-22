@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Sign Up";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/auth.css"> <!-- Link to the external CSS -->
+</head>
+<body>
+
+    <div class="login-background">
+        <div class="login-container">
+            <h2>Create Account</h2>
+            <form asp-action="Signup" method="post">
+                <div class="form-group">
+                    <label for="Name">Name</label>
+                    <input type="text" id="Name" name="Name" placeholder="Enter your name" required />
+                </div>
+                <div class="form-group">
+                    <label for="Surname">Surname</label>
+                    <input type="text" id="Surname" name="Surname" placeholder="Enter your surname" required />
+                </div>
+                <div class="form-group">
+                    <label for="Username">Username</label>
+                    <input type="text" id="Username" name="Username" placeholder="Choose a username" required />
+                </div>
+                <div class="form-group">
+                    <label for="Password">Password</label>
+                    <div class="password-container">
+                        <input type="password" id="Password" name="Password" placeholder="Create a password" required />
+                        <span id="eye" onclick="togglePassword()">👁️</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="ConfirmPassword">Confirm Password</label>
+                    <div class="password-container">
+                        <input type="password" id="ConfirmPassword" name="ConfirmPassword" placeholder="Confirm your password" required />
+                        <span id="eye" onclick="togglePassword()">👁️</span>
+                    </div>
+                </div>
+                <button type="submit" class="btn">Sign Up</button>
+            </form>
+
+            <p class="signup-link">Already have an account? <a href="@Url.Action("Login", "Account")">Login here</a></p>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword() {
+            var passwordField = document.getElementById("Password");
+            var confirmPasswordField = document.getElementById("ConfirmPassword");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                confirmPasswordField.type = "text";
+            } else {
+                passwordField.type = "password";
+                confirmPasswordField.type = "password";
+            }
+        }
+    </script>
+
+</body>
+</html>

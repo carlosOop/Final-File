@@ -1,0 +1,19 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<div class="container">
+    <h2>Change Username</h2>
+
+    <form asp-action="ChangeUsername" method="post">
+        <div class="form-group">
+            <label for="newUsername">Current Username: </label>
+            <input type="text" class="form-control" value="@ViewBag.CurrentUsername" disabled />
+        </div>
+        <div class="form-group">
+            <label for="newUsername">New Username: </label>
+            <input type="text" class="form-control" name="newUsername" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Change Username</button>
+    </form>
+</div>

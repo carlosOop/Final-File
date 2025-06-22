@@ -1,0 +1,14 @@
+﻿@model ManageBooking.Models.Customer
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="container">
+    <h2>Checkout Customer</h2>
+    <form asp-action="CheckoutConfirmed" method="post">
+        <p>Are you sure you want to checkout the customer <strong>@Model.Name</strong>?</p>
+        <button type="submit" class="btn btn-success">Checkout</button>
+        <a href="@Url.Action("History", "Customer")" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

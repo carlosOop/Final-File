@@ -1,0 +1,212 @@
+﻿@model ManageBooking.Models.Customer
+@{
+    Layout = "_Layout";
+}
+<link href="~/css/Register.css" rel="stylesheet" />
+
+<div class="registration-container">
+    <h2 class="text-center mb-4">Customer Registration</h2>
+
+    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+    <form asp-action="CustomerRegistration" method="post" class="registration-form">
+        <div class="form-group">
+            <label asp-for="Name">Name</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="MobileNumber">Mobile Number</label>
+            <input asp-for="MobileNumber" class="form-control" />
+            <span asp-validation-for="MobileNumber" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Nationality">Nationality</label>
+            <select asp-for="Nationality" class="form-control">
+                <option value="">Select Nationality</option>
+                <option>Filipino</option>
+                <option>American</option>
+                <option>British</option>
+                <option>Chinese</option>
+                <option>Japanese</option>
+                <option>Korean</option>
+                <option>Other</option>
+            </select>
+            <span asp-validation-for="Nationality" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Gender">Gender</label>
+            <select asp-for="Gender" class="form-control">
+                <option value="">Select Gender</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+            </select>
+            <span asp-validation-for="Gender" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ID">ID Number</label>
+            <input asp-for="ID" class="form-control" />
+            <span asp-validation-for="ID" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Address">Address</label>
+            <textarea asp-for="Address" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="BedType">Bed Type</label>
+            <select asp-for="BedType" class="form-control">
+                <option value="">Select Bed Type</option>
+                <option>Single</option>
+                <option>Double</option>
+                <option>Queen</option>
+                <option>King</option>
+            </select>
+            <span asp-validation-for="BedType" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="RoomType">Room Type</label>
+            <select asp-for="RoomType" class="form-control">
+                <option value="">Select Room Type</option>
+                <option>Standard</option>
+                <option>Deluxe</option>
+                <option>Suite</option>
+                <option>Presidential</option>
+            </select>
+            <span asp-validation-for="RoomType" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="RoomNumber">Room Number</label>
+            <select asp-for="RoomNumber" class="form-control" id="roomNumberSelect" onchange="handleRoomNumberChange()">
+                <option value="">Select Room Number</option>
+                @for (int i = 1; i <= 100; i++)
+                {
+                    var isOccupied = ViewBag.OccupiedRooms != null && ((List<string>)ViewBag.OccupiedRooms).Contains(i.ToString());
+                    if (!isOccupied)
+                    {
+                        <option value="@i">Room @i</option>
+                    }
+                    else
+                    {
+                        <option value="@i" disabled style="color: #999;">Room @i (Occupied)</option>
+                    }
+                }
+                <option value="custom">Custom Room Number</option>
+            </select>
+            <input asp-for="RoomNumber" type="text" class="form-control mt-2" id="customRoomInput"
+                   placeholder="Enter custom room number" style="display: none;" />
+            <span asp-validation-for="RoomNumber" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="RatePerDay">Rate per Day</label>
+            <input asp-for="RatePerDay" type="number" step="0.01" class="form-control" id="ratePerDayInput" />
+            <span asp-validation-for="RatePerDay" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="BirthDate">Birth Date</label>
+            <input asp-for="BirthDate" type="date" class="form-control" />
+            <span asp-validation-for="BirthDate" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CheckIn">Check In</label>
+            <input asp-for="CheckIn" type="datetime-local" class="form-control" id="checkInInput" />
+            <span asp-validation-for="CheckIn" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CheckOut">Check Out</label>
+            <input asp-for="CheckOut" type="datetime-local" class="form-control" id="checkOutInput" />
+            <span asp-validation-for="CheckOut" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="TotalBill">Total Bill</label>
+            <input asp-for="TotalBill" type="number" step="0.01" class="form-control" id="totalBillOutput" readonly />
+            <span asp-validation-for="TotalBill" class="text-danger"></span>
+        </div>
+
+        <input asp-for="UserId" type="hidden" value="1" />
+
+        <div class="form-actions mt-4">
+            <button type="submit" class="btn btn-primary">Register</button>
+            <a asp-action="History" class="btn btn-secondary ms-2">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    function handleRoomNumberChange() {
+        const select = document.getElementById('roomNumberSelect');
+        const customInput = document.getElementById('customRoomInput');
+
+        if (select.value === 'custom') {
+            customInput.style.display = 'block';
+            customInput.required = true;
+            customInput.name = 'RoomNumber'; // Set the name for model binding
+            select.name = ''; // Remove name from select to avoid conflicts
+        } else {
+            customInput.style.display = 'none';
+            customInput.required = false;
+            customInput.name = ''; // Remove name from custom input
+            select.name = 'RoomNumber'; // Set the name back to select
+        }
+    }
+
+    // Function to calculate the total bill
+    function calculateTotalBill() {
+        const checkInStr = document.getElementById('checkInInput').value;
+        const checkOutStr = document.getElementById('checkOutInput').value;
+        const ratePerDay = parseFloat(document.getElementById('ratePerDayInput').value);
+        const totalBillOutput = document.getElementById('totalBillOutput');
+
+        // Reset total bill if inputs are invalid
+        totalBillOutput.value = '';
+
+        if (checkInStr && checkOutStr && !isNaN(ratePerDay) && ratePerDay >= 0) {
+            const checkIn = new Date(checkInStr);
+            const checkOut = new Date(checkOutStr);
+
+            // Check if checkOut is after checkIn
+            if (checkOut > checkIn) {
+                // Calculate the difference in milliseconds
+                const diffTime = Math.abs(checkOut - checkIn);
+                // Convert milliseconds to days (1 day = 24 * 60 * 60 * 1000 milliseconds)
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // Use Math.ceil to round up to the nearest whole day
+
+                const totalBill = diffDays * ratePerDay;
+                totalBillOutput.value = totalBill.toFixed(2); // Format to 2 decimal places
+            } else {
+                totalBillOutput.value = '0.00'; // If checkout is before or same as check-in, bill is 0
+            }
+        }
+    }
+
+    // Add event listeners to trigger calculation
+    document.addEventListener('DOMContentLoaded', function() {
+        handleRoomNumberChange(); // Initialize room number input visibility
+
+        const checkInInput = document.getElementById('checkInInput');
+        const checkOutInput = document.getElementById('checkOutInput');
+        const ratePerDayInput = document.getElementById('ratePerDayInput');
+
+        checkInInput.addEventListener('change', calculateTotalBill);
+        checkOutInput.addEventListener('change', calculateTotalBill);
+        ratePerDayInput.addEventListener('input', calculateTotalBill); // Use 'input' for real-time updates as user types
+    });
+</script>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

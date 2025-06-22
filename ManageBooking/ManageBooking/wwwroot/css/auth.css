@@ -1,0 +1,416 @@
+﻿@charset "utf-8";
+/* CSS Document */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Montserrat", sans-serif;
+    font-size: 12px;
+    line-height: 1em;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+button {
+    background-color: transparent;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+}
+
+input {
+    background-color: transparent;
+    padding: 0;
+    border: 0;
+    outline: 0;
+}
+
+    input[type="submit"] {
+        cursor: pointer;
+    }
+
+    /* Placeholder Styling */
+    input::-webkit-input-placeholder {
+        font-size: 0.85rem;
+        color: #ccc;
+    }
+
+    input::placeholder {
+        font-size: 0.85rem;
+        color: #ccc;
+    }
+
+/* Bounce Animations */
+@keyframes bounceLeft {
+    0% {
+        transform: translate3d(100%, -50%, 0);
+    }
+
+    50% {
+        transform: translate3d(-30px, -50%, 0);
+    }
+
+    100% {
+        transform: translate3d(0, -50%, 0);
+    }
+}
+
+@keyframes bounceRight {
+    0% {
+        transform: translate3d(0, -50%, 0);
+    }
+
+    50% {
+        transform: translate3d(calc(100% + 30px), -50%, 0);
+    }
+
+    100% {
+        transform: translate3d(100%, -50%, 0);
+    }
+}
+
+@keyframes showSignUp {
+    100% {
+        opacity: 1;
+        visibility: visible;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+/* Background Styling */
+.user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background: #dcdef2;
+}
+
+.user_options-container {
+    position: relative;
+    width: 80%;
+}
+
+.user_options-text {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    background-color: rgba(34, 34, 34, 0.85);
+    border-radius: 3px;
+   
+}
+
+.user_options-registered, .user_options-unregistered {
+    width: 50%;
+    padding: 75px 45px;
+    color: #fff;
+    font-weight: 300;
+}
+
+.user_unregistered-signup {
+    border: solid;
+}
+
+.user_registered-login{
+    border: solid;
+}
+
+.user_registered-title, .user_unregistered-title {
+    margin-bottom: 15px;
+    font-size: 1.66rem;
+    line-height: 1em;
+}
+
+.user_unregistered-text, .user_registered-text {
+    font-size: 0.83rem;
+    line-height: 1.4em;
+   
+}
+
+.user_registered-login, .user_unregistered-signup {
+    margin-top: 30px;
+    padding: 10px 30px;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+    .user_registered-login:hover, .user_unregistered-signup:hover {
+        color: rgba(34, 34, 34, 0.85);
+        background-color: #ccc;
+    }
+
+/* Login and Sign Up Forms */
+.user_options-forms {
+    position: absolute;
+    top: 50%;
+    left: 30px;
+    width: calc(50% - 30px);
+    min-height: 400px; /* Default height for login form */
+    background-color: #fff;
+    border-radius: 3px;
+    box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    transform: translate3d(100%, -50%, 0);
+    transition: transform 0.4s ease-in-out, min-height 0.4s ease-in-out;
+}
+
+    /* Auto-adjust height when signup form is active */
+    .user_options-forms.bounceLeft {
+        min-height: 420px; /* Taller height for signup form */
+    }
+
+.user_forms-login, .user_forms-signup {
+    position: absolute;
+    top: 50px; /* Back to original position for login */
+    left: 40px;
+    width: calc(100% - 80px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+   
+}
+
+.user_forms-login {
+    opacity: 1;
+    visibility: visible;
+}
+
+.user_forms-signup {
+    position: absolute;
+    top: 50px;
+    left: 40px;
+    width: calc(100% - 80px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+    transform: translate3d(0, 0, 0);
+   
+}
+
+.forms_title {
+    margin-bottom: 45px; /* Back to original spacing for login */
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #e8716d;
+}
+
+/* Tighter spacing specifically for signup form */
+.user_forms-signup .forms_title {
+    margin-bottom: 25px;
+}
+
+.forms_field {
+    margin-bottom: 20px; /* Back to original spacing */
+}
+
+/* Tighter field spacing for signup form */
+.user_forms-signup .forms_field {
+    margin-bottom: 12px;
+}
+
+.forms_field-input {
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+    padding: 6px 20px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: black;
+    letter-spacing: 0.1rem;
+    transition: border-color 0.2s ease-in-out;
+}
+
+    .forms_field-input:focus {
+        border-color: gray;
+    }
+
+.forms_buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 35px; /* Back to original spacing */
+}
+
+/* Tighter button spacing for signup form */
+.user_forms-signup .forms_buttons {
+    margin-top: 20px;
+}
+
+.forms_buttons-forgot {
+    font-family: "Montserrat", sans-serif;
+    letter-spacing: 0.1rem;
+    color: #ccc;
+    text-decoration: underline;
+    transition: color 0.2s ease-in-out;
+}
+
+    .forms_buttons-forgot:hover {
+        color: #b3b3b3;
+    }
+
+.forms_buttons-action {
+    background-color: #e8716d;
+    border-radius: 3px;
+    padding: 10px 35px;
+    font-size: 1rem;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    transition: background-color 0.2s ease-in-out;
+}
+
+    .forms_buttons-action:hover {
+        background-color: #e14641;
+    }
+
+/* Transitions */
+.user_options-forms.bounceLeft {
+    animation: bounceLeft 1s forwards;
+}
+
+    .user_options-forms.bounceLeft .user_forms-signup {
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    .user_options-forms.bounceLeft .user_forms-login {
+        opacity: 0;
+        visibility: hidden;
+        transform: translate3d(-120px, 0, 0);
+    }
+
+.user_options-forms.bounceRight {
+    animation: bounceRight 1s forwards;
+}
+
+.eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+}
+
+.password-container {
+    position: relative;
+}
+
+@media screen and (max-width: 990px) {
+    .user_options-forms {
+        min-height: 480px; /* Increased from 350px */
+    }
+
+        .user_options-forms .forms_buttons {
+            flex-direction: column;
+        }
+
+        .user_options-forms .user_forms-login .forms_buttons-action {
+            margin-top: 30px;
+        }
+
+        .user_options-forms .user_forms-signup,
+        .user_options-forms .user_forms-login {
+            top: 30px; /* Reduced from 40px */
+        }
+
+    .user_options-registered, .user_options-unregistered {
+        padding: 50px 45px;
+    }
+}
+
+/* Forgot Password Form Styles - Add to your existing CSS */
+
+.user_forms-forgot {
+    position: absolute;
+    top: 50px;
+    left: 40px;
+    width: calc(100% - 80px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+    transform: translate3d(0, 0, 0);
+}
+
+    .user_forms-forgot .forms_title {
+        margin-bottom: 25px;
+    }
+
+    .user_forms-forgot .forms_field {
+        margin-bottom: 12px;
+    }
+
+    .user_forms-forgot .forms_buttons {
+        margin-top: 20px;
+    }
+
+.forms_buttons-back {
+    background-color: transparent;
+    color: #ccc;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.1rem;
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+}
+
+    .forms_buttons-back:hover {
+        color: #b3b3b3;
+    }
+
+    .forms_buttons-back span {
+        display: inline-block;
+    }
+
+/* Success and Error Messages for Forgot Password */
+.success-message {
+    color: #28a745;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 3px;
+    padding: 10px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.error-message {
+    color: #dc3545;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 3px;
+    padding: 10px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* Adjust form container height when forgot password is active */
+.user_options-forms.forgot-active {
+    min-height: 450px;
+}
+
+@media screen and (max-width: 990px) {
+    .user_forms-forgot {
+        top: 30px;
+    }
+
+        .user_forms-forgot .forms_buttons {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .user_forms-forgot .forms_buttons-action {
+            margin-top: 20px;
+            align-self: stretch;
+        }
+}
+
+ 
